@@ -1,5 +1,8 @@
 pipeline{
   agent any
+  tools{
+  gradle 'Gradle-6.7'
+  }
   stages{
     stage('build'){
       steps{
@@ -15,9 +18,9 @@ pipeline{
       steps{
         echo "testing the application.."
         echo "Tested the Application"
-        withGradle(){
+       
           sh './gradlew -v'
-        }
+       
       }
     }
     stage('deploy'){
