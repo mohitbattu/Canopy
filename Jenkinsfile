@@ -4,6 +4,10 @@ pipeline{
     stage('build'){
       steps{
         echo "building the application.."
+        nodejs('Node-10.7'){
+          sh 'yarn install'
+          
+        }
         echo "Application built"
       }
     }
@@ -11,6 +15,9 @@ pipeline{
       steps{
         echo "testing the application.."
         echo "Tested the Application"
+        withGradle(){
+          sh './gradlew -v'
+        }
       }
     }
     stage('deploy'){
