@@ -1,4 +1,5 @@
 CODE_CHANGES = getGitChanges()
+def gv
 pipeline{
   agent any
   parameters{
@@ -13,6 +14,14 @@ pipeline{
   gradle 'Gradle-6.7'
   }
   stages{
+    stage("init") {
+            steps {
+                script {
+                   gv = load "script.groovy" 
+                }
+            }
+        }
+
     stage('build'){
       steps{
         when{
@@ -20,6 +29,7 @@ pipeline{
           BRANCH_NAME == 'dev' && CODE_CHANGES == true
           }
         }
+        gv.buildApp()
         echo "building the application..${NEW_VERSION}"
         nodejs('Node-10.7'){
           sh 'yarn install'
